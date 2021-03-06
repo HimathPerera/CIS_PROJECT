@@ -1,0 +1,22 @@
+.section_wrapper {
+  width: 100%;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.welcome_logo {
+  padding-right: 42px;
+}
+
+@media (max-width: 768px) {
+  .welcome_logo {
+    width: 240px;
+    height: 115px;
+    padding-right: 35px;
+  }
+}
+.link {
+  text-decoration: none;
+}

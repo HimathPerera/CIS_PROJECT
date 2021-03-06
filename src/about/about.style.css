@@ -1,0 +1,25 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 500px;
+  position: absolute;
+  left: 25%;
+}
+.questions {
+  margin-top: 35px;
+}
+.progress {
+  width: 650px;
+  margin-bottom: 40px;
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    left: 0%;
+  }
+  .progress {
+    width: 100%;
+  }
+}
