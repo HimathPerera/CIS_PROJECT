@@ -5,13 +5,17 @@ export default function Button({
   children,
   isgoogle,
   inverted,
+  disabled,
   ...otherProps
 }) {
   return (
     <button
       className={`${inverted ? "inverted" : ""}
-      ${isgoogle ? "google-sign-in" : ""} custom-button`}
+      ${isgoogle ? "google-sign-in" : ""} ${
+        disabled ? "disabled" : ""
+      } custom-button`}
       {...otherProps}
+      disabled={disabled}
     >
       {children}
     </button>

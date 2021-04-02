@@ -1,5 +1,3 @@
-.sign-up {
-  width: 350px;
-  display: flex;
-  flex-direction: column;
+.auth-container {
+  width: 40vw;
 }

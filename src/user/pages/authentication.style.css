@@ -5,20 +5,10 @@
   margin: 30px auto;
   flex-direction: row;
 }
-.line {
-  width: 1.5px;
-  background-color: black;
-}
 
-@media (max-width: 950px) {
+/* @media (max-width: 950px) {
   .auth {
-    width: 90%;
-    display: flex;
-    justify-content: center;
-    margin: 30px auto;
-    flex-direction: column;
+ 
   }
-  .line {
-    display: none;
-  }
-}
+
+} */

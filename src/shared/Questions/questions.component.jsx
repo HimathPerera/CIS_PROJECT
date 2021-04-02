@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./questions.style.css";
 
-export default function Questions() {
+export default function Questions({ completedPrecentage }) {
   const questions = [
     {
       questionText: "What is your shopping frequency?",
@@ -46,12 +46,37 @@ export default function Questions() {
   ];
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [questionValue, setquestionValue] = useState(0);
+  let questionValue = [];
+  const [precentage, setPresentage] = useState(12.5);
   const [End, setEnd] = useState(false);
 
-  console.log(questionValue);
-  const nextQuestionHandler = (value) => {
-    setquestionValue({ ...questionValue, value });
+  const nextQuestionHandler = async (value) => {
+    questionValue.push(value);
+
+    ///child to parent loading bar on screen
+    setPresentage(precentage + 12.5);
+    completedPrecentage(precentage);
+
+    try {
+      const response = await fetch(
+        `http://localhost:5000/surway/questions/${currentQuestion + 1}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            value: questionValue[0],
+          }),
+        }
+      );
+
+      const responseData = await response.json();
+      console.log("111", responseData);
+    } catch (err) {
+      console.log(err);
+    }
+
     if (currentQuestion + 1 < questions.length) {
       setCurrentQuestion(currentQuestion + 1);
     } else {

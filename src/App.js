@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -10,36 +10,55 @@ import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import Welcome from "./welcome/pages/welcome.page";
 import Authentication from "./user/pages/authentication.page";
 import About from "./about/about.page";
+import Admin from "./user/components/admin/admin.component";
+import { AuthContext } from "./context/auth-context";
 
 const App = () => {
-  //dummy user
-  const USER = [
-    {
-      id: "124578",
-      email: "test@test.com",
-      password: "test12345",
-    },
-  ];
+  const [isLoggedIn, setisLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
+  const login = useCallback(() => {
+    setisLoggedIn(true);
+  }, []);
+
+  const logout = useCallback(() => {
+    setisLoggedIn(false);
+    setIsAdmin(false);
+  }, []);
+
+  const admin = useCallback(() => {
+    setIsAdmin(true);
+  }, []);
+
+  // console.log(localStorage.getItem("LOGIN"));
   return (
-    <Router>
-      <MainNavigation />
-      <main>
-        <Switch>
-          <Route path="/questions" exact>
-            <About />
-          </Route>
-          <Route path="/" exact>
-            <Welcome user={USER} />
-          </Route>
-          <Route path="/authenticate" exact>
-            <Authentication />
-          </Route>
+    <AuthContext.Provider value={{ isLoggedIn, login, logout, admin, isAdmin }}>
+      <Router>
+        <MainNavigation />
+        <main>
+          <Switch>
+            {isLoggedIn && (
+              <Route path="/surway/questions" exact>
+                <About />
+              </Route>
+            )}
+            <Route path="/" exact>
+              <Welcome />
+            </Route>
+            {isAdmin && (
+              <Route path="/authenticate/admin">
+                <Admin />
+              </Route>
+            )}
+            <Route path="/authenticate" exact>
+              <Authentication />
+            </Route>
 
-          <Redirect to="/" />
-        </Switch>
-      </main>
-    </Router>
+            <Redirect to="/" />
+          </Switch>
+        </main>
+      </Router>
+    </AuthContext.Provider>
   );
 };
 
