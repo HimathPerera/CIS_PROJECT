@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./questions.style.css";
 
+import { AuthContext } from "../../context/auth-context";
+
 export default function Questions({ completedPrecentage }) {
+  const auth = useContext(AuthContext);
   const questions = [
     {
       questionText: "What is your shopping frequency?",
@@ -29,7 +32,6 @@ export default function Questions({ completedPrecentage }) {
         { answerText: "Personal vehicle", value: 1 },
         { answerText: "Hired vehicle", value: 2 },
         { answerText: "Public transport", value: 3 },
-        { answerText: "By foot", value: 4 },
       ],
     },
     {
@@ -39,8 +41,43 @@ export default function Questions({ completedPrecentage }) {
       answerOptions: [
         { answerText: "Yes", value: 1 },
         { answerText: "No", value: 2 },
+        { answerText: "average", value: 3 },
+      ],
+    },
+    {
+      questionText: "Are you interested in online shopping with Arpico?",
+      questionId: 5,
+      answerOptions: [
+        { answerText: "Yes", value: 1 },
+        { answerText: "No", value: 2 },
+        { answerText: "average", value: 3 },
+      ],
+    },
+    {
+      questionText: " What is your most preferred way of online shopping??",
+      questionId: 6,
+      answerOptions: [
+        { answerText: "Website", value: 1 },
+        { answerText: "Viber/Whatsapp", value: 2 },
+        { answerText: "Order By calls", value: 3 },
+      ],
+    },
+    {
+      questionText: "Do you think delivering is better than visiting premises",
+      questionId: 7,
+      answerOptions: [
+        { answerText: "Yes", value: 1 },
+        { answerText: "No", value: 2 },
         { answerText: "Average", value: 3 },
-        { answerText: "Great", value: 4 },
+      ],
+    },
+    {
+      questionText: "Which payment method do you prefe?",
+      questionId: 8,
+      answerOptions: [
+        { answerText: "Cash", value: 1 },
+        { answerText: "Credit card", value: 2 },
+        { answerText: "e-money", value: 3 },
       ],
     },
   ];
@@ -56,6 +93,28 @@ export default function Questions({ completedPrecentage }) {
     ///child to parent loading bar on screen
     setPresentage(precentage + 12.5);
     completedPrecentage(precentage);
+
+    if (currentQuestion + 1 === 4) {
+      try {
+        const response = await fetch(
+          "http://localhost:5000/questions/isComplete",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              isComplete: true,
+              token: auth.token,
+            }),
+          }
+        );
+
+        await response.json();
+      } catch (err) {
+        console.log(err);
+      }
+    }
 
     try {
       const response = await fetch(
@@ -86,6 +145,7 @@ export default function Questions({ completedPrecentage }) {
 
   if (End === true) {
     return <div className="end-section">Thank You for Your Valuable Time</div>;
+    // return <div>hello</div>;
   } else {
     return (
       <div className="app">

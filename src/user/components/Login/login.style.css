@@ -1,3 +1,17 @@
-.auth-container {
+/* .auth-container {
   width: 40vw;
+} */
+
+.auth-container {
+  width: 650px;
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+@media only screen and (max-width: 600px) {
+  .auth-container {
+    position: relative !important;
+    transform: translate(0, 0);
+  }
 }

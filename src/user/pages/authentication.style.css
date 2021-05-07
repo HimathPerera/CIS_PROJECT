@@ -5,10 +5,20 @@
   margin: 30px auto;
   flex-direction: row;
 }
+/* .auth {
+  display: flex;
+  width: 100vw;
+  min-height: 100vh;
+}
 
-/* @media (max-width: 950px) {
-  .auth {
- 
-  }
+.image-container {
+  background-image: url(/img/login_crop.png);
+  height: 100%;
+  width: calc(100% - 450px);
+  /* width: calc(100vw - 485px); */
 
-} */
+/* display: block;
+  align-items: inherit;
+  position: absolute;
+  left: 450px;
+}  */

@@ -28,7 +28,7 @@ export default function Input1(props) {
     isTouch: false,
   });
 
-  const { onInput, id } = props;
+  const { onInput, id, type } = props;
   const { value, isValid } = inputState;
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export default function Input1(props) {
       <label htmlFor={props.id}>{props.label}</label>
       {!inputState.isValid && inputState.isTouch && <p>{props.errorText}</p>}
       <input
-        type="text"
+        type={type}
         id={props.id}
         placeholder={props.placeholder}
         onChange={changeHandler}

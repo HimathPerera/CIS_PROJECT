@@ -27,6 +27,11 @@ const NavLinks = () => {
           <NavLink to="/authenticate">AUTHENTICATE</NavLink>
         </li>
       )}
+      {auth.isAdmin && (
+        <li>
+          <NavLink to="/authenticate/admin">ADMIN DB</NavLink>
+        </li>
+      )}
       {(auth.isLoggedIn || auth.isAdmin) && (
         <li>
           <button className="nav-links" onClick={auth.logout}>

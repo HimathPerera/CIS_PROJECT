@@ -58,11 +58,11 @@ export default function Login() {
 
         if (response.ok && responseData.admin === true) {
           setIsLoading(false);
-          auth.admin();
+          auth.admin(responseData.token, responseData.admin);
           console.log("logged in as a admin");
         } else if (response.ok && responseData.admin === false) {
           setIsLoading(false);
-          auth.login();
+          auth.login(responseData.token, responseData.admin);
           console.log("logged in as a user");
         } else {
           throw new Error(responseData.message);
@@ -91,12 +91,12 @@ export default function Login() {
         );
 
         const responseData = await response.json();
-        console.log(responseData);
+
         if (!response.ok) {
           throw new Error(responseData.message);
         }
         setIsLoading(false);
-        auth.login();
+        auth.login(responseData.token, responseData.admin);
       } catch (err) {
         setIsLoading(false);
         setError(err.message || "something went wrong");
@@ -137,7 +137,6 @@ export default function Login() {
       {isLoading && <LoadingSpinner asOverlay />}
       <Card className="auth-container">
         <h2>{isLoginMode ? "Login required" : "signup required"}</h2>
-        <hr />
 
         <form>
           {!isLoginMode && (
@@ -145,6 +144,7 @@ export default function Login() {
               <Input1
                 label="name"
                 id="name"
+                type="text"
                 placeholder="Enter name"
                 errorText="please enter a valid name"
                 validators={[VALIDATOR_MINLENGTH(3)]}
@@ -153,6 +153,7 @@ export default function Login() {
               <Input1
                 label="mobile number"
                 id="mobile"
+                type="text"
                 placeholder="Enter mobile number"
                 errorText="please enter a valid number"
                 validators={[VALIDATOR_MINLENGTH(10)]}
@@ -163,6 +164,7 @@ export default function Login() {
           <Input1
             label="email"
             id="email"
+            type="text"
             placeholder="Enter email"
             errorText="please enter a valid email"
             validators={[VALIDATOR_EMAIL()]}
@@ -171,6 +173,7 @@ export default function Login() {
           <Input1
             label="password"
             id="password"
+            type="password"
             placeholder="Enter password"
             errorText="please enter a valid password"
             validators={[VALIDATOR_MINLENGTH(5)]}

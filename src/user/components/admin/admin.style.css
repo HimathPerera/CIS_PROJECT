@@ -1,12 +1,42 @@
 .admin-chart-container {
   width: 100%;
   height: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto;
 }
+.winners {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.card_1,
+.card_2 {
+  padding: 8px !important;
+  margin: 0px !important;
+  box-shadow: none !important;
+  border-radius: 0px !important;
+  border: 1px solid #ccc;
+}
+
 .admin-card {
-  width: 45%;
-  margin: 40px;
+  margin: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.admin-chart {
+  width: 40vw;
+  height: 40vh;
+}
+@media (max-width: 868px) {
+  .admin-card {
+    margin: 10px;
+  }
+  .admin-chart-container {
+    grid-template-columns: auto;
+  }
+  .admin-chart {
+    width: 90vw;
+    height: 48vh;
+  }
 }

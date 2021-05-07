@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -14,30 +14,52 @@ import Admin from "./user/components/admin/admin.component";
 import { AuthContext } from "./context/auth-context";
 
 const App = () => {
-  const [isLoggedIn, setisLoggedIn] = useState(false);
+  const [token, setToken] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [adminToken, setAdminToken] = useState(false);
 
-  const login = useCallback(() => {
-    setisLoggedIn(true);
+  const login = useCallback((token, admin) => {
+    setToken(token);
+    setIsAdmin(admin);
   }, []);
 
   const logout = useCallback(() => {
-    setisLoggedIn(false);
+    setToken(false);
     setIsAdmin(false);
+    localStorage.clear();
   }, []);
 
-  const admin = useCallback(() => {
-    setIsAdmin(true);
+  const admin = useCallback((token, admin) => {
+    setIsAdmin(admin);
+    setAdminToken(token);
+    localStorage.setItem("userItem", JSON.stringify({ token, admin }));
   }, []);
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("userItem"));
+    if (storedUser && storedUser.token && storedUser.admin) {
+      admin(storedUser.token, storedUser.admin);
+    }
+  }, [admin]);
 
   // console.log(localStorage.getItem("LOGIN"));
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout, admin, isAdmin }}>
+    <AuthContext.Provider
+      value={{
+        isLoggedIn: !!token,
+        login,
+        logout,
+        admin,
+        isAdmin,
+        token,
+        adminToken,
+      }}
+    >
       <Router>
         <MainNavigation />
         <main>
           <Switch>
-            {isLoggedIn && (
+            {token && (
               <Route path="/surway/questions" exact>
                 <About />
               </Route>
